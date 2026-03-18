@@ -1,20 +1,21 @@
 "use strict";
 /**
  * =========================================================
- * 3. Enums
+ * 11. Enums
  * =========================================================
  */
 /**
  * Numeric Enum (default)
  */
-var Direction;
-(function (Direction) {
-    Direction[Direction["Up"] = 0] = "Up";
-    Direction[Direction["Down"] = 1] = "Down";
-    Direction[Direction["Left"] = 2] = "Left";
-    Direction[Direction["Right"] = 3] = "Right";
-})(Direction || (Direction = {}));
-let move = Direction.Up;
+console.info('%c11. Enum', 'color: yellow; font-weight: bold; font-size: 18px');
+var Directions;
+(function (Directions) {
+    Directions[Directions["Up"] = 0] = "Up";
+    Directions[Directions["Down"] = 1] = "Down";
+    Directions[Directions["Left"] = 2] = "Left";
+    Directions[Directions["Right"] = 3] = "Right";
+})(Directions || (Directions = {}));
+let move = Directions.Up;
 /**
  * Custom numeric values
  */

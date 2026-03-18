@@ -1,6 +1,6 @@
 /**
  * =========================================================
- * 3. Enums
+ * 11. Enums
  * =========================================================
  */
 
@@ -8,14 +8,19 @@
  * Numeric Enum (default)
  */
 
-enum Direction {
+console.info(
+  '%c11. Enum',
+  'color: yellow; font-weight: bold; font-size: 18px',
+);
+
+enum Directions {
   Up, // 0
   Down, // 1
   Left, // 2
   Right, // 3
 }
 
-let move: Direction = Direction.Up;
+let move: Directions = Directions.Up;
 
 /**
  * Custom numeric values

@@ -26,7 +26,36 @@ let notDefined = undefined;
 // bigint
 let bigNumber = 12345678901234567890n;
 // symbol
+//Starting with ECMAScript 2015, symbol is a primitive data type, just like number and string. symbol values are created by calling the Symbol constructor.
 let sym = Symbol('id');
+let sym2 = Symbol('key');
+let sym3 = Symbol('key');
+sym2 === sym3; // false, symbols are unique
+// Just like strings, symbols can be used as keys for object properties.
+const sym1 = Symbol();
+let obj = {
+    [sym1]: 'value',
+};
+console.log(obj[sym1]); // "value"
+// sym2 can only be a constant reference.
+// let sym4: unique symbol = Symbol(); ❌ Error
+const sym9 = Symbol();
+// A variable whose type is a 'unique symbol' type must be 'const'.
+// Works - refers to a unique symbol, but its identity is tied to 'sym1'.
+let sym5 = sym9;
+// Also works.
+class C {
+}
+C.StaticSymbol = Symbol();
+// Because each unique symbol has a completely separate identity, no two unique symbol types are assignable or comparable to each other.
+const sym6 = Symbol();
+const sym7 = Symbol();
+/*
+if (sym6 === sym7) {
+This comparison appears to be unintentional because the types 'typeof sym2' and 'typeof sym3' have no overlap.
+   // ...
+} ❌ Error
+*/
 /**
  * --------------------------------
  * 2. Type Inference
@@ -161,6 +190,40 @@ function getUser() {
     return [1, 'Zaffar'];
 }
 const [userId, userName] = getUser();
+// ---------------------------------------------------------
+// object type & Index Signatures
+// ---------------------------------------------------------
+// The `object` type — anything that is not a primitive
+let obj1 = { name: "Zaffar" };
+let translations = {
+    hello: "Hola",
+    bye: "Adios",
+};
+let appConfig = {
+    version: 1,
+    theme: "dark",
+    debug: true,
+};
+// ---------------------------------------------------------
+// typeof in Type Position
+// WHERE TO ADD: your Type Inference section (file 1, after section 2)
+// ---------------------------------------------------------
+// typeof at RUNTIME (in code) — checks value type
+// typeof in TYPE POSITION — extracts TypeScript type from a variable
+const apiResponse = {
+    status: 200,
+    data: { userId: 1, username: "Zaffar" },
+};
+// Equivalent to:
+// type ApiResponse = { status: number; data: { userId: number; username: string } }
+// Very useful with functions
+function createUser(name, age) {
+    return { name, age, createdAt: new Date() };
+}
+// type: { name: string; age: number; createdAt: Date }
+// 🔥 Key Difference:
+// typeof x         → at runtime: returns "string", "number", "object" etc.
+// let y: typeof x  → in type position: copies x's full TypeScript type
 /**
  * --------------------------------
  * Quick Interview Notes

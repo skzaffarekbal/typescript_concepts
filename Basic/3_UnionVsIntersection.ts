@@ -1,6 +1,6 @@
 /**
  * =========================================================
- * 2. Union & Intersection Types
+ * 10. Union & Intersection Types
  * =========================================================
  */
 
@@ -8,6 +8,11 @@
  * Union Type:
  * - Value can be ONE of multiple types
  */
+
+console.info(
+  '%c10. Union & Intersection Types',
+  'color: yellow; font-weight: bold; font-size: 18px',
+);
 
 let id: number | string;
 
