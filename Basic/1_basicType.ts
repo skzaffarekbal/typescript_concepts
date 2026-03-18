@@ -49,12 +49,12 @@ console.log(obj[sym1]); // "value"
 
 declare const sym4: unique symbol;
 
-// sym2 can only be a constant reference.
+// sym4 can only be a constant reference.
 // let sym4: unique symbol = Symbol(); ❌ Error
 const sym9: unique symbol = Symbol();
 // A variable whose type is a 'unique symbol' type must be 'const'.
 
-// Works - refers to a unique symbol, but its identity is tied to 'sym1'.
+// Works - refers to a unique symbol, but its identity is tied to 'sym9'.
 let sym5: typeof sym9 = sym9;
 
 // Also works.
