@@ -30,7 +30,49 @@ let notDefined: undefined = undefined;
 let bigNumber: bigint = 12345678901234567890n;
 
 // symbol
+//Starting with ECMAScript 2015, symbol is a primitive data type, just like number and string. symbol values are created by calling the Symbol constructor.
 let sym: symbol = Symbol('id');
+
+let sym2 = Symbol('key');
+let sym3 = Symbol('key');
+sym2 === sym3; // false, symbols are unique
+
+// Just like strings, symbols can be used as keys for object properties.
+const sym1 = Symbol();
+let obj = {
+  [sym1]: 'value',
+};
+console.log(obj[sym1]); // "value"
+
+// unique symbol
+// unique symbol is a subtype of symbol, treating symbols as unique literals. This type is only allowed on const declarations and readonly static properties, and in order to reference a specific unique symbol, you’ll have to use the typeof operator.
+
+declare const sym4: unique symbol;
+
+// sym2 can only be a constant reference.
+// let sym4: unique symbol = Symbol(); ❌ Error
+const sym9: unique symbol = Symbol();
+// A variable whose type is a 'unique symbol' type must be 'const'.
+
+// Works - refers to a unique symbol, but its identity is tied to 'sym1'.
+let sym5: typeof sym9 = sym9;
+
+// Also works.
+class C {
+  static readonly StaticSymbol: unique symbol = Symbol();
+}
+
+// Because each unique symbol has a completely separate identity, no two unique symbol types are assignable or comparable to each other.
+
+const sym6 = Symbol();
+const sym7 = Symbol();
+
+/* 
+if (sym6 === sym7) {
+This comparison appears to be unintentional because the types 'typeof sym2' and 'typeof sym3' have no overlap.
+   // ...
+} ❌ Error
+*/
 
 /**
  * --------------------------------
@@ -205,6 +247,67 @@ function getUser(): [userId: number, userName: string] {
 
 const [userId, userName] = getUser();
 
+// ---------------------------------------------------------
+// object type & Index Signatures
+// ---------------------------------------------------------
+
+// The `object` type — anything that is not a primitive
+let obj1: object = { name: "Zaffar" };
+// obj1.name; ❌ Error — `object` type has no known properties
+// Use typed interfaces/types instead (which you already do well)
+
+// Index Signature — when you don't know property names in advance
+type StringMap = {
+  [key: string]: string; // any string key → string value
+};
+
+let translations: StringMap = {
+  hello: "Hola",
+  bye: "Adios",
+};
+
+// Index Signature with known + dynamic properties
+type Config = {
+  version: number;          // known property
+  [key: string]: unknown;   // dynamic properties (must be compatible)
+};
+
+let appConfig: Config = {
+  version: 1,
+  theme: "dark",
+  debug: true,
+};
+
+// ---------------------------------------------------------
+// typeof in Type Position
+// WHERE TO ADD: your Type Inference section (file 1, after section 2)
+// ---------------------------------------------------------
+
+// typeof at RUNTIME (in code) — checks value type
+// typeof in TYPE POSITION — extracts TypeScript type from a variable
+
+const apiResponse = {
+  status: 200,
+  data: { userId: 1, username: "Zaffar" },
+};
+
+// Extract the type of an existing value — no need to write it twice
+type ApiResponse = typeof apiResponse;
+// Equivalent to:
+// type ApiResponse = { status: number; data: { userId: number; username: string } }
+
+// Very useful with functions
+function createUser(name: string, age: number) {
+  return { name, age, createdAt: new Date() };
+}
+
+type CreatedUser = ReturnType<typeof createUser>;
+// type: { name: string; age: number; createdAt: Date }
+
+// 🔥 Key Difference:
+// typeof x         → at runtime: returns "string", "number", "object" etc.
+// let y: typeof x  → in type position: copies x's full TypeScript type
+
 /**
  * --------------------------------
  * Quick Interview Notes
@@ -216,5 +319,5 @@ const [userId, userName] = getUser();
  * never    -> function never returns
  * tuple    -> fixed structure array
  * literal  -> fixed allowed values
- *
+ * 
  */

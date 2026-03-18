@@ -1,6 +1,6 @@
 /**
  * =========================================================
- * 1. Literal Types & Type Alias
+ * 9. Literal Types & Type Alias
  * =========================================================
  */
 
@@ -9,6 +9,10 @@
  * - Restrict values to specific constants
  * - Useful for strict control (e.g., API responses, UI states)
  */
+console.info(
+  '%c9. Literal Types & Type Alias',
+  'color: yellow; font-weight: bold; font-size: 18px',
+);
 
 let direction: 'left' | 'right';
 
@@ -23,6 +27,32 @@ direction = 'right'; // ✅
 type Status = 'loading' | 'success' | 'error';
 
 let apiStatus: Status = 'loading';
+
+// ---------------------------------------------------------
+// 2. as const
+// ---------------------------------------------------------
+
+// Without `as const` — TypeScript widens the type
+const colorsArr = ["red", "green", "blue"];
+// type: string[]  ← too broad
+
+// With `as const` — freezes to exact literal types
+const colorsConst = ["red", "green", "blue"] as const;
+// type: readonly ["red", "green", "blue"]  ← exact literals
+
+// Very useful for objects too
+const CONFIG = {
+  endpoint: "/api/v1",
+  timeout: 3000,
+  method: "GET",
+} as const;
+
+// CONFIG.method is now "GET" (literal), not string
+// CONFIG.timeout = 5000; ❌ Error — readonly
+
+// Common real-world pattern (replaces enums in many codebases)
+const DIRECTIONS = ["up", "down", "left", "right"] as const;
+type Direction = typeof DIRECTIONS[number]; // "up" | "down" | "left" | "right"
 
 /**
  * -----------------------------------------
