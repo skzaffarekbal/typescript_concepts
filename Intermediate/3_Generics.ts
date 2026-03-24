@@ -149,7 +149,7 @@ interface ApiResponse<T> {
   success: boolean;
 }
 
-type User = {
+type UserGenerics = {
   id: number;
   name: string;
 };
@@ -160,7 +160,7 @@ type Product = {
 };
 
 // Same wrapper, different data shapes
-const userResponse: ApiResponse<User> = {
+const userResponse: ApiResponse<UserGenerics> = {
   data: { id: 11, name: 'Zaff' },
   status: 200,
   message: 'Ok',
@@ -175,7 +175,7 @@ const productResponse: ApiResponse<Product> = {
 };
 
 // Array response
-const usersResponse: ApiResponse<User[]> = {
+const usersResponse: ApiResponse<UserGenerics[]> = {
   data: [
     { id: 11, name: 'Zaff' },
     { id: 12, name: 'Lucky' },
@@ -198,16 +198,16 @@ interface Repository<T> {
 }
 
 // Implement for a specific type
-class UserRepository implements Repository<User> {
-  private users: User[] = [];
+class UserRepository implements Repository<UserGenerics> {
+  private users: UserGenerics[] = [];
 
-  findById(id: number): User | undefined {
+  findById(id: number): UserGenerics | undefined {
     return this.users.find((u) => u.id === id);
   }
-  findAll(): User[] {
+  findAll(): UserGenerics[] {
     return this.users;
   }
-  save(user: User): void {
+  save(user: UserGenerics): void {
     this.users.push(user);
   }
   delete(id: number): void {
@@ -237,7 +237,7 @@ const coord: Pair<number, number> = { first: 99, second: 98 };
 
 // Generic callback
 type Callback<T> = (error: Error | null, result: T | null) => void;
-function fetchData(cb: Callback<User>) {
+function fetchData(cb: Callback<UserGenerics>) {
   cb(null, { id: 1, name: 'Zaff' });
 }
 
@@ -473,7 +473,7 @@ interface PaginatedResponse<T, Meta = { total: number; page: number }> {
 }
 
 // Uses default Meta type
-const page1: PaginatedResponse<User> = {
+const page1: PaginatedResponse<UserGenerics> = {
   data: [{ id: 1, name: 'Zaffar' }],
   meta: { total: 100, page: 1 },
 };
@@ -481,7 +481,7 @@ const page1: PaginatedResponse<User> = {
 // Override with custom Meta type
 type CursorMeta = { nextCursor: string; hasMore: boolean };
 
-const page2: PaginatedResponse<User, CursorMeta> = {
+const page2: PaginatedResponse<UserGenerics, CursorMeta> = {
   data: [{ id: 2, name: 'Ali' }],
   meta: { nextCursor: 'abc123', hasMore: true },
 };
@@ -503,7 +503,7 @@ async function fetchJson<T>(url: string): Promise<ApiResponse<T>> {
 }
 
 // Usage
-// const users = await fetchJson<User[]>("/api/users");
+// const users = await fetchJson<UserGenerics[]>("/api/users");
 // users.data[0].name ✅ — fully typed
 
 /**
