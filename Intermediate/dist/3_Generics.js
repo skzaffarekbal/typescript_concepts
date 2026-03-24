@@ -27,7 +27,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-console.info('%c2. TypeScript Generics', 'color: yellow; font-weight: bold; font-size: 18px');
+console.info('%c3. TypeScript Generics', 'color: yellow; font-weight: bold; font-size: 18px');
 /**
  * =========================================================
  * 1. Why Generics?

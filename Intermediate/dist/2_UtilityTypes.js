@@ -18,6 +18,7 @@
  *
  * =========================================================
  */
+console.info('%c3. TypeScript Utility Types', 'color: yellow; font-weight: bold; font-size: 18px');
 // Equivalent to writing manually:
 // type PartialUser = {
 //   id?:    number;

@@ -18,7 +18,7 @@
  * =========================================================
  */
 
-console.info('%c2. TypeScript Generics', 'color: yellow; font-weight: bold; font-size: 18px');
+console.info('%c3. TypeScript Generics', 'color: yellow; font-weight: bold; font-size: 18px');
 
 /**
  * =========================================================
