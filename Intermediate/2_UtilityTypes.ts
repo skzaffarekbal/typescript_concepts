@@ -18,6 +18,8 @@
  * =========================================================
  */
 
+console.info('%c3. TypeScript Utility Types', 'color: yellow; font-weight: bold; font-size: 18px');
+
 /**
  * Base type we will use throughout this file
  */
