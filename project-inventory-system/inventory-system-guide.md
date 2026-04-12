@@ -483,9 +483,9 @@ What to wire up:
 ## Project Checklist
 
 ```
-Task 1 — Types foundation          [ ]
-Task 2 — Generic Store             [ ]
-Task 3 — Typed Storage             [ ]
+Task 1 — Types foundation          [x]
+Task 2 — Generic Store             [x]
+Task 3 — Typed Storage             [x]
 Task 4 — Product Service           [ ]
 Task 5 — Form Validator            [ ]
 Task 6 — Declaration file          [ ]
