@@ -486,7 +486,7 @@ What to wire up:
 Task 1 — Types foundation          [x]
 Task 2 — Generic Store             [x]
 Task 3 — Typed Storage             [x]
-Task 4 — Product Service           [ ]
+Task 4 — Product Service           [x]
 Task 5 — Form Validator            [ ]
 Task 6 — Declaration file          [ ]
 Task 7 — UI Rendering              [ ]
