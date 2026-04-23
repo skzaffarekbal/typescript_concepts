@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "noEmitOnError": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": false
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
