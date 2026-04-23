@@ -30,6 +30,7 @@ import {
   renderStockModal,
   getFormData,
   resetForm,
+  renderMovementHistory,
 } from './ui/render.js';
 
 import { debounce } from './utils/helpers.js';
@@ -256,6 +257,16 @@ async function handleProductListClick(e: MouseEvent): Promise<void> {
     } catch (err) {
       if (err instanceof Error) alert(err.message);
     }
+    return;
+  }
+
+  //   ── History ─────────────────────────────────────────────
+  if (target.classList.contains('btn-history')) {
+    const product = service.getById(id);
+    if (!product) return;
+
+    const movements = service.getMovementHistory(id);
+    renderMovementHistory(product, movements);
     return;
   }
 }
