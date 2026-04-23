@@ -10,7 +10,7 @@
 // main.ts passes data to them.
 // =========================================================
 
-import { type Product, type AppConfig, APP_CONFIG } from '../types/index.js';
+import { type Product, type AppConfig, type StockMovement, APP_CONFIG } from '../types/index.js';
 import type { ValidationResult } from '../validators/FormValidator.js';
 import { formatCurrency, formatDate, truncate, capitalize } from '../utils/helpers.js';
 
@@ -103,7 +103,10 @@ export function renderProductCard(
         <span class="product-name">${truncate(product.name, 25)}</span>
         <span class="badge ${badgeClass}">${product.status}</span>
       </div>
-      <span class="product-sku">${product.sku}</span>
+      <div class="card-title">
+        <span class="product-sku">${product.sku}</span>
+        <button class="btn-history badge" data-id="${product.id}">History</button>
+      </div>
     </div>
 
     <div class="card-body">
@@ -393,3 +396,117 @@ export function resetForm(): void {
  *   e: MouseEvent        → type event callbacks explicitly
  *   e: KeyboardEvent     → never leave events as plain `Event`
  */
+
+// ---------------------------------------------------------
+// renderMovementHistory
+// ---------------------------------------------------------
+// Renders a list of stock movements for ONE product.
+// Called when user clicks "History" on a product card.
+
+export function renderMovementHistory(product: Product, movements: StockMovement[]): void {
+  closeHistoryPanel();
+
+  const panel = document.createElement('div');
+  panel.id = 'history-panel';
+  panel.className = 'history-panel';
+
+  panel.innerHTML = `
+    <div class="hp-header">
+      <div>
+        <div class="hp-title">Stock History</div>
+        <div class="hp-sub">${product.name} &middot; ${product.sku}</div>
+      </div>
+      <button class="hp-close" id="close-history">&#10005;</button>
+    </div>
+    <div class="hp-summary">
+      <div class="hp-stat">
+        <span class="hp-stat-label">Current Stock</span>
+        <span class="hp-stat-value ${product.stock === 0 ? 'danger' : product.stock <= 5 ? 'warning' : 'success'}">
+          ${product.stock} units
+        </span>
+      </div>
+      <div class="hp-stat">
+        <span class="hp-stat-label">Total Movements</span>
+        <span class="hp-stat-value primary">${movements.length}</span>
+      </div>
+      <div class="hp-stat">
+        <span class="hp-stat-label">Total In</span>
+        <span class="hp-stat-value success">
+          +${movements.filter((m) => m.type === 'in').reduce((s, m) => s + m.quantity, 0)}
+        </span>
+      </div>
+      <div class="hp-stat">
+        <span class="hp-stat-label">Total Out</span>
+        <span class="hp-stat-value warning">
+          -${movements.filter((m) => m.type === 'out').reduce((s, m) => s + m.quantity, 0)}
+        </span>
+      </div>
+    </div>
+    <div class="hp-list">
+      ${
+        movements.length === 0
+          ? `<div class="hp-empty">No movements recorded yet</div>`
+          : [...movements]
+              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+              .map(
+                (m, i) => `
+              <div class="hp-row" style="animation-delay:${i * 0.04}s">
+                <div class="hp-type ${m.type === 'in' ? 'type-in' : 'type-out'}">
+                  ${m.type === 'in' ? '+' : '−'}
+                </div>
+                <div class="hp-info">
+                  <span class="hp-qty ${m.type === 'in' ? 'success' : 'warning'}">
+                    ${m.type === 'in' ? '+' : '-'}${m.quantity} units
+                  </span>
+                  <span class="hp-action">
+                    Stock ${m.type === 'in' ? 'received' : 'dispatched'}
+                  </span>
+                </div>
+                <div class="hp-date">${formatDate(new Date(m.date))}</div>
+              </div>
+            `,
+              )
+              .join('')
+      }
+    </div>
+  `;
+
+  document.body.appendChild(panel);
+  requestAnimationFrame(() => panel.classList.add('open'));
+
+  // Close button
+  document.getElementById('close-history')?.addEventListener('click', closeHistoryPanel);
+
+  // ✅ Fix — wait for current click event to finish
+  // before adding the outside-click listener
+  setTimeout(() => {
+    document.addEventListener('click', handleOutsideClick);
+  }, 0);
+}
+
+// ---------------------------------------------------------
+// closeHistoryPanel
+// ---------------------------------------------------------
+
+export function closeHistoryPanel(): void {
+  const panel = document.getElementById('history-panel');
+  if (!panel) return;
+
+  panel.classList.remove('open');
+
+  // Remove listener immediately so it cannot fire again
+  document.removeEventListener('click', handleOutsideClick); // ✅
+
+  panel.addEventListener('transitionend', () => panel.remove(), { once: true });
+}
+
+// ---------------------------------------------------------
+// handleOutsideClick — closes panel if clicking outside
+// ---------------------------------------------------------
+
+function handleOutsideClick(e: MouseEvent): void {
+  const panel = document.getElementById('history-panel');
+  if (panel && !panel.contains(e.target as Node)) {
+    closeHistoryPanel();
+  }
+}
