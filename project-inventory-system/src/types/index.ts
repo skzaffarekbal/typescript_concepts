@@ -41,6 +41,6 @@ export type AppConfig = Readonly<{
 
 export const APP_CONFIG: AppConfig = {
   lowStockThreshold: 5,
-  currency: '$',
+  currency: '₹',
   maxProducts: 100,
 };

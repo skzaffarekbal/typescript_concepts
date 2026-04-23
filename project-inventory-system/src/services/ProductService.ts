@@ -9,8 +9,8 @@
 // Then adds product-specific business logic on top.
 // =========================================================
 
-import { Store, TypedStorage } from '../store/Store';
-import { type Product, type StockMovement, APP_CONFIG } from '../types';
+import { Store, TypedStorage } from '../store/Store.js';
+import { type Product, type StockMovement, APP_CONFIG } from '../types/index.js';
 
 // =========================================================
 // Decorators

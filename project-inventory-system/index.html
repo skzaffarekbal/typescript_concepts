@@ -7,57 +7,120 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Inventory System</h1>
-    </header>
+    <main>
+      <section class="page-header">
+        <h1>Inventory System</h1>
+      </section>
 
-    <!-- Stats bar -->
-    <section id="stats">
-      <div id="stat-total-products"></div>
-      <div id="stat-total-value"></div>
-      <div id="stat-low-stock"></div>
-    </section>
+      <section class="panel">
+        <!-- Add product form -->
+        <h2>Add Product</h2>
+        <form id="product-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" placeholder="Product name" />
+            </div>
+            <div class="form-group">
+              <label for="sku">SKU</label>
+              <input type="text" id="sku" placeholder="SKU" />
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" id="price" placeholder="Price" />
+            </div>
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" id="stock" placeholder="Stock" />
+            </div>
+            <div class="form-group">
+              <label for="category">Category</label>
+              <select id="category">
+                <option value="electronics">Electronics</option>
+                <option value="clothing">Clothing</option>
+                <option value="food">Food</option>
+                <option value="tools">Tools</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status">
+                <option value="active">Active</option>
+                <option value="inactive">In-Active</option>
+              </select>
+            </div>
+          </div>
+          <button id="submit-btn" type="submit" class="btn-primary">Add Product</button>
+        </form>
+        <div id="form-errors"></div>
+      </section>
 
-    <!-- Add product form -->
-    <section id="form-section">
-      <form id="product-form">
-        <input type="text" id="name" placeholder="Product name" />
-        <input type="text" id="sku" placeholder="SKU" />
-        <input type="number" id="price" placeholder="Price" />
-        <input type="number" id="stock" placeholder="Stock" />
-        <select id="category">
-          <option value="electronics">Electronics</option>
-          <option value="clothing">Clothing</option>
-          <option value="food">Food</option>
-          <option value="tools">Tools</option>
-        </select>
-        <button type="submit">Add Product</button>
-      </form>
-      <div id="form-errors"></div>
-    </section>
+      <!-- Stats bar -->
+      <section class="panel">
+        <h2>Stats</h2>
+        <div class="stats">
+          <div class="stat-card">
+            <span class="stat-label">Total Products</span>
+            <span id="stat-total-products" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Total Value</span>
+            <span id="stat-total-value" class="stat-value">$0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Low Stock</span>
+            <span id="stat-low-stock" class="stat-value warn">0</span>
+          </div>
+        </div>
+      </section>
 
-    <!-- Filters and sort -->
-    <section id="controls">
-      <input type="text" id="search" placeholder="Search products..." />
-      <select id="sort">
-        <option value="name-asc">Name A–Z</option>
-        <option value="name-desc">Name Z–A</option>
-        <option value="price-asc">Price Low–High</option>
-        <option value="price-desc">Price High–Low</option>
-        <option value="stock-asc">Stock Low–High</option>
-        <option value="stock-desc">Stock High–Low</option>
-      </select>
-      <select id="filter-category">
-        <option value="all">All Categories</option>
-        <option value="electronics">Electronics</option>
-        <option value="clothing">Clothing</option>
-        <option value="food">Food</option>
-        <option value="tools">Tools</option>
-      </select>
-    </section>
+      <!-- Filters and sort -->
+      <section class="panel">
+        <h2>Filter & Sort</h2>
+        <div class="controls">
+          <div class="form-group">
+            <label for="search">Search</label>
+            <input type="text" id="search" placeholder="Search products..." />
+          </div>
+          <div class="form-group">
+            <label for="sort">Sort</label>
+            <select id="sort">
+              <option value="name-asc">Name A–Z</option>
+              <option value="name-desc">Name Z–A</option>
+              <option value="price-asc">Price Low–High</option>
+              <option value="price-desc">Price High–Low</option>
+              <option value="stock-asc">Stock Low–High</option>
+              <option value="stock-desc">Stock High–Low</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filter-category">Category</label>
+            <select id="filter-category">
+              <option value="all">All Categories</option>
+              <option value="electronics">Electronics</option>
+              <option value="clothing">Clothing</option>
+              <option value="food">Food</option>
+              <option value="tools">Tools</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="filter-status">Status</label>
+            <select id="filter-status">
+              <option value="all">All</option>
+              <option value="active">Active</option>
+              <option value="inactive">In-Active</option>
+              <option value="out-of-stock">Out Of Stock</option>
+            </select>
+          </div>
+        </div>
+      </section>
 
-    <!-- Product list -->
-    <section id="product-list"></section>
+      <!-- Product list -->
+      <section class="panel">
+        <h2>Products</h2>
+        <div id="product-list" class="product-list"></div>
+      </section>
+    </main>
 
     <script type="module" src="dist/main.js"></script>
   </body>
