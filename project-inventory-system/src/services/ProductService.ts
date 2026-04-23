@@ -163,7 +163,11 @@ export class ProductService extends Store<Product> {
   // ---------------------------------------------------------
   removeProduct(id: string): boolean {
     const removed = this.remove(id);
-    if (removed) this.persist();
+    if (removed) {
+      this.movements = this.movements.filter((item) => item.productId !== id);
+      this.persist();
+      this.persistMovement();
+    }
     return removed;
   }
 
