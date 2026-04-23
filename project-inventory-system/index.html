@@ -20,18 +20,22 @@
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" id="name" placeholder="Product name" />
+              <span class="error-text" id="error-name"></span>
             </div>
             <div class="form-group">
               <label for="sku">SKU</label>
               <input type="text" id="sku" placeholder="SKU" />
+              <span class="error-text" id="error-sku"></span>
             </div>
             <div class="form-group">
               <label for="price">Price</label>
               <input type="number" id="price" placeholder="Price" />
+              <span class="error-text" id="error-price"></span>
             </div>
             <div class="form-group">
               <label for="stock">Stock</label>
               <input type="number" id="stock" placeholder="Stock" />
+              <span class="error-text" id="error-stock"></span>
             </div>
             <div class="form-group">
               <label for="category">Category</label>
@@ -41,6 +45,7 @@
                 <option value="food">Food</option>
                 <option value="tools">Tools</option>
               </select>
+              <span class="error-text" id="error-category"></span>
             </div>
             <div class="form-group">
               <label for="status">Status</label>
@@ -48,6 +53,7 @@
                 <option value="active">Active</option>
                 <option value="inactive">In-Active</option>
               </select>
+              <span class="error-text" id="error-status"></span>
             </div>
           </div>
           <button id="submit-btn" type="submit" class="btn-primary">Add Product</button>

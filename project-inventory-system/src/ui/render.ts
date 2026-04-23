@@ -189,29 +189,47 @@ export function renderProductList(products: readonly Product[], editingId: strin
 export function renderValidationErrors<T>(result: ValidationResult<T>): void {
   // Loop over every key in the result
   for (const key in result) {
-    const field = key as keyof T;
-    const error = result[field]; // string | null
-
-    // Look for an element with id="error-{fieldName}"
+    const error = result[key as keyof T];
     const errorEl = document.getElementById(`error-${key}`);
-    if (!errorEl) continue;
+    const inputEl = document.getElementById(key);
+
+    if (!errorEl) continue; // ← element not found — check HTML ids
 
     if (error) {
-      errorEl.textContent = error; // show error
-      errorEl.style.display = 'block';
-
-      // Also mark the input as invalid
-      const input = document.getElementById(key);
-      input?.classList.add('input-error');
+      errorEl.textContent   = error as string;
+      errorEl.style.display = 'block';        // ✅ must be set
+      inputEl?.classList.add('input-error');
     } else {
-      errorEl.textContent = ''; // clear error
-      errorEl.style.display = 'none';
-
-      // Remove invalid mark
-      const input = document.getElementById(key);
-      input?.classList.remove('input-error');
+      errorEl.textContent   = '';
+      errorEl.style.display = 'none';         // ✅ clear on valid
+      inputEl?.classList.remove('input-error');
     }
   }
+
+  // for (const key in result) {
+  //   const field = key as keyof T;
+  //   const error = result[field]; // string | null
+
+  //   // Look for an element with id="error-{fieldName}"
+  //   const errorEl = document.getElementById(`error-${key}`);
+  //   if (!errorEl) continue;
+
+  //   if (error) {
+  //     errorEl.textContent = error; // show error
+  //     errorEl.style.display = 'block';
+
+  //     // Also mark the input as invalid
+  //     const input = document.getElementById(key);
+  //     input?.classList.add('input-error');
+  //   } else {
+  //     errorEl.textContent = ''; // clear error
+  //     errorEl.style.display = 'none';
+
+  //     // Remove invalid mark
+  //     const input = document.getElementById(key);
+  //     input?.classList.remove('input-error');
+  //   }
+  // }
 }
 
 // =========================================================
@@ -290,11 +308,13 @@ export function renderStockModal(product: Product, type: 'in' | 'out'): Promise<
 
       if (isNaN(qty) || qty <= 0) {
         errorEl.textContent = 'Please enter a valid quantity';
+        errorEl.style.display = 'block'; 
         return;
       }
 
       if (type === 'out' && qty > product.stock) {
         errorEl.textContent = `Cannot remove more than ${product.stock} units`;
+        errorEl.style.display = 'block'; 
         return;
       }
 
