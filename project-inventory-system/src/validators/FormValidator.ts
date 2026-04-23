@@ -186,6 +186,7 @@ export class FormValidator<T> {
         const isEmpty =
           value === null ||
           value === undefined ||
+          Number.isNaN(value) ||
           (typeof value === 'string' && value.trim() === '');
 
         if (isEmpty) {
